@@ -35,4 +35,6 @@ ManageYourFinance is a prototype web application aimed at helping users monitor 
 - Prathamesh Borse
 
 ---
+Samples:
+![localhost_5173_](https://github.com/user-attachments/assets/6fc59508-4763-4770-a0c1-41b1760f89ae)
 
