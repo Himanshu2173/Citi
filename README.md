@@ -27,3 +27,12 @@ ManageYourFinance is a prototype web application aimed at helping users monitor 
 - **Tools:** Node.js, npm
 
 ---
+
+## Created By
+
+- Himanshu Verma
+- Parag Chittora
+- Prathamesh Borse
+
+---
+
