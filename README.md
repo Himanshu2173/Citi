@@ -1,12 +1,29 @@
-# React + Vite
+# 💸 ManageYourFinance WebApp Prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, intuitive web application prototype for **expense tracking** and **investment management**, created as part of **Citi's CCIC 5.0 hackathon**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Project Overview
 
-## Expanding the ESLint configuration
+ManageYourFinance is a prototype web application aimed at helping users monitor and manage their financial activities. It allows users to track expenses, plan investments, and visualize their financial health effectively.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Features
+
+- 💰 Track daily, weekly, or monthly expenses
+- 📊 View detailed expense and investment charts
+- 🧾 Categorize expenses (Food, Travel, Bills, etc.)
+- 📈 Monitor investment performance
+- 🧠 Simple and user-friendly UI for financial planning
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend:** HTML, Tailwind CSS, JavaScript
+- **Design:** Tailwind UI / Custom UI components
+- **Tools:** Node.js, npm
+
+---
