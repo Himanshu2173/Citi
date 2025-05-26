@@ -250,3 +250,4 @@ const InvestmentInsights = ({ investments }) => {
 };
 
 export default InvestmentInsights;
+
