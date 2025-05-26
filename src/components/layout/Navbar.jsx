@@ -14,12 +14,30 @@ const NavContainer = styled.nav`
   z-index: 1000;
 `;
 
-const Logo = styled(Link)`
+const LogoContainer = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.medium};
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const LogoImage = styled.img`
+  height: 80px;
+  width: 80px;
+  object-fit: contain;
+`;
+
+const LogoText = styled.span`
   font-size: 1.8em;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.textLight};
-  text-decoration: none;
-  &:hover {
+  
+  ${LogoContainer}:hover & {
     color: ${({ theme }) => theme.colors.secondary};
   }
 `;
@@ -35,6 +53,7 @@ const NavLink = styled(Link)`
   text-decoration: none;
   padding: ${({ theme }) => theme.spacing.small};
   transition: color 0.3s ease;
+
   &:hover {
     color: ${({ theme }) => theme.colors.secondary};
   }
@@ -53,6 +72,7 @@ const PrimaryButton = styled(Link)`
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.3s ease;
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.buttonHover};
   }
@@ -67,25 +87,28 @@ const SecondaryButton = styled(Link)`
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s ease;
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.textLight};
   }
 `;
 
-
 const Navbar = () => {
   return (
     <NavContainer>
-      <Logo to="/">ManageYourFinance</Logo> {/* [cite: 1] */}
+      <LogoContainer to="/">
+        <LogoImage src="/src/Logo.png" alt="Finoramic Logo" />
+        <LogoText>Finoramic</LogoText>
+      </LogoContainer>
       <NavLinks>
-        <NavLink to="/services">Services</NavLink> {/* [cite: 1] */}
-        <NavLink to="/pricing">Pricing</NavLink> {/* [cite: 1] */}
-        <NavLink to="/about">About</NavLink> {/* [cite: 1] */}
+        <NavLink to="/services">Services</NavLink>
+        <NavLink to="/pricing">Pricing</NavLink>
+        <NavLink to="/about">About</NavLink>
       </NavLinks>
       <AuthButtons>
-        <SecondaryButton to="/login">Login In</SecondaryButton> {/* [cite: 1] */}
-        <PrimaryButton to="/create-account">Create →</PrimaryButton> {/* [cite: 1] */}
+        <SecondaryButton to="/login">Login In</SecondaryButton>
+        <PrimaryButton to="/create-account">Create →</PrimaryButton>
       </AuthButtons>
     </NavContainer>
   );

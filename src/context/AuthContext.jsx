@@ -7,12 +7,18 @@ export const AuthContext = createContext();
 // Create the Auth Provider component
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    // Initialize from localStorage
+    // Initialize from localStorage to persist login state across sessions
     return localStorage.getItem('isAuthenticated') === 'true';
   });
 
   const [currentUser, setCurrentUser] = useState(() => {
-    return JSON.parse(localStorage.getItem('currentUser')) || null;
+    // Initialize current user data from localStorage
+    try {
+      return JSON.parse(localStorage.getItem('currentUser')) || null;
+    } catch (e) {
+      console.error("Failed to parse currentUser from localStorage", e);
+      return null;
+    }
   });
 
   // Effect to update localStorage whenever isAuthenticated or currentUser changes
@@ -21,24 +27,24 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }, [isAuthenticated, currentUser]);
 
-  // Simulate login
+  // Simulate login function
   const login = (userData) => {
     setIsAuthenticated(true);
-    setCurrentUser(userData); // Store some user data, e.g., { email: 'user@example.com' }
+    setCurrentUser(userData); // Store user data (e.g., { email: 'user@example.com', name: 'User Name' })
   };
 
-  // Simulate logout
+  // Simulate logout function
   const logout = () => {
     setIsAuthenticated(false);
     setCurrentUser(null);
-    // Clear all app-specific data on logout for a clean state
+    // Clear all authentication-related data and app-specific data from localStorage on logout
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('expenses'); // Clear expenses
-    localStorage.removeItem('financialGoals'); // Clear goals
-    localStorage.removeItem('investments'); // Clear investments
-    localStorage.removeItem('incomeEntries'); // Clear income
-    // Add any other localStorage items you want to clear on logout
+    localStorage.removeItem('expenses');
+    localStorage.removeItem('financialGoals');
+    localStorage.removeItem('investments');
+    localStorage.removeItem('incomeEntries');
+    // Add any other localStorage keys your app uses to clear here
   };
 
   return (
@@ -48,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the Auth Context
+// Custom hook to easily consume the Auth Context in components
 export const useAuth = () => {
   return useContext(AuthContext);
 };

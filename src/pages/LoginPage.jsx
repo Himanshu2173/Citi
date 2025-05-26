@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import LoginForm from '../components/auth/LoginForm';
+import { useAuth } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AuthPageContainer = styled.div`
   display: flex;

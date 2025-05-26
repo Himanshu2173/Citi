@@ -44,7 +44,7 @@ const Footer = () => {
         <FooterLink to="/terms">Terms</FooterLink> {/* [cite: 9] */}
         <FooterLink to="/privacy">Privacy</FooterLink> {/* [cite: 9] */}
       </FooterLinks>
-      <Copyright>2025 ManageYourFinance. All rights reserved.</Copyright> {/* [cite: 9] */}
+      <Copyright>© 2025 ManageYourFinance. All rights reserved.</Copyright> {/* [cite: 9] */}
     </FooterContainer>
   );
 };
