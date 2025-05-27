@@ -1,4 +1,4 @@
-# 💸 ManageYourFinance WebApp Prototype
+# 💸 Finoramic: AI-Enabled Finance Management WebApp
 
 A simple, intuitive web application prototype for **expense tracking** and **investment management**, created as part of **Citi's CCIC 5.0 hackathon**.
 
