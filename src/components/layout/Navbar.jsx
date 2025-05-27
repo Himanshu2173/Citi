@@ -1,91 +1,98 @@
-import React from 'react';
+// src/components/layout/Navbar.jsx
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const NavContainer = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: ${({ theme }) => theme.spacing.large} ${({ theme }) => theme.spacing.xlarge};
-  background-color: ${({ theme }) => theme.colors.darkBackground};
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+const NavbarContainer = styled.nav`
+  background-color: ${({ theme }) => theme.colors.navBackground};
+  padding: ${({ theme }) => theme.spacing.medium} ${({ theme }) => theme.spacing.large};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
 `;
 
-const LogoContainer = styled(Link)`
+const NavbarContent = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.medium};
-  text-decoration: none;
-  transition: opacity 0.3s ease;
-  
-  &:hover {
-    opacity: 0.8;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
-const LogoImage = styled.img`
-  height: 80px;
-  width: 80px;
-  object-fit: contain;
-`;
-
-const LogoText = styled.span`
+const Logo = styled(Link)`
   font-size: 1.8em;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textLight};
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: none;
   
-  ${LogoContainer}:hover & {
+  &:hover {
     color: ${({ theme }) => theme.colors.secondary};
   }
 `;
 
 const NavLinks = styled.div`
   display: flex;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing.large};
+
+  @media (max-width: 768px) {
+    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: ${({ theme }) => theme.colors.navBackground};
+    flex-direction: column;
+    padding: ${({ theme }) => theme.spacing.medium};
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const NavLink = styled(Link)`
   color: ${({ theme }) => theme.colors.textLight};
-  font-size: 1.1em;
   text-decoration: none;
+  font-weight: 500;
   padding: ${({ theme }) => theme.spacing.small};
-  transition: color 0.3s ease;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  transition: all 0.3s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.primary};
+    background-color: rgba(78, 205, 196, 0.1);
+  }
+
+  &.active {
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
-const AuthButtons = styled.div`
+const UserInfo = styled.div`
   display: flex;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing.medium};
-`;
-
-const PrimaryButton = styled(Link)`
-  background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textLight};
-  padding: ${({ theme }) => theme.spacing.medium} ${({ theme }) => theme.spacing.large};
-  border-radius: ${({ theme }) => theme.borderRadius};
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-size: 0.9em;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.buttonHover};
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing.small};
   }
 `;
 
-const SecondaryButton = styled(Link)`
+const UserEmail = styled.span`
+  color: ${({ theme }) => theme.colors.textDark};
+`;
+
+const LogoutButton = styled.button`
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.textLight};
-  padding: ${({ theme }) => theme.spacing.medium} ${({ theme }) => theme.spacing.large};
-  border: 2px solid ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
   border-radius: ${({ theme }) => theme.borderRadius};
-  text-decoration: none;
-  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9em;
   transition: all 0.3s ease;
 
   &:hover {
@@ -94,23 +101,92 @@ const SecondaryButton = styled(Link)`
   }
 `;
 
+const MobileMenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.textLight};
+  font-size: 1.5em;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isAuthenticated, currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+      setIsMobileMenuOpen(false);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <NavContainer>
-      <LogoContainer to="/">
-        <LogoImage src="/src/Logo.png" alt="Finoramic Logo" />
-        <LogoText>Finoramic</LogoText>
-      </LogoContainer>
-      <NavLinks>
-        <NavLink to="/services">Services</NavLink>
-        <NavLink to="/pricing">Pricing</NavLink>
-        <NavLink to="/about">About</NavLink>
-      </NavLinks>
-      <AuthButtons>
-        <SecondaryButton to="/login">Login In</SecondaryButton>
-        <PrimaryButton to="/create-account">Create →</PrimaryButton>
-      </AuthButtons>
-    </NavContainer>
+    <NavbarContainer>
+      <NavbarContent>
+        <Logo to="/" onClick={closeMobileMenu}>
+          FinanceTracker
+        </Logo>
+
+        <MobileMenuButton onClick={toggleMobileMenu}>
+          ☰
+        </MobileMenuButton>
+
+        <NavLinks isOpen={isMobileMenuOpen}>
+          <NavLink to="/" onClick={closeMobileMenu}>
+            Home
+          </NavLink>
+          <NavLink to="/about" onClick={closeMobileMenu}>
+            About
+          </NavLink>
+          <NavLink to="/services" onClick={closeMobileMenu}>
+            Services
+          </NavLink>
+          <NavLink to="/pricing" onClick={closeMobileMenu}>
+            Pricing
+          </NavLink>
+
+          {isAuthenticated ? (
+            <>
+              <NavLink to="/dashboard" onClick={closeMobileMenu}>
+                Dashboard
+              </NavLink>
+              <UserInfo>
+                <UserEmail>{currentUser?.email}</UserEmail>
+                <LogoutButton onClick={handleLogout}>
+                  Logout
+                </LogoutButton>
+              </UserInfo>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" onClick={closeMobileMenu}>
+                Login
+              </NavLink>
+              <NavLink to="/create-account" onClick={closeMobileMenu}>
+                Sign Up
+              </NavLink>
+            </>
+          )}
+        </NavLinks>
+      </NavbarContent>
+    </NavbarContainer>
   );
 };
 
